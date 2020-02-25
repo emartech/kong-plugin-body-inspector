@@ -5,7 +5,7 @@ describe("Boilerplate", function()
   local kong_sdk, send_request, send_admin_request
 
   setup(function()
-    helpers.start_kong({ custom_plugins = "boilerplate" })
+    helpers.start_kong({ plugins = "boilerplate" })
 
     kong_sdk = kong_client.create_kong_client()
     send_request = kong_client.create_request_sender(helpers.proxy_client())
@@ -27,6 +27,7 @@ describe("Boilerplate", function()
     before_each(function()
       service = kong_sdk.services:create({
         name = "test-service",
+        id = "0a7f3795-bc92-43b5-aada-258113b7c4ed",
         url = "http://mockbin:8080/request"
       })
 
@@ -35,7 +36,9 @@ describe("Boilerplate", function()
 
     it("should add headers to the proxied request", function()
       kong_sdk.plugins:create({
-        service_id = service.id,
+        service = {
+          id = service.id
+        },
         name = "boilerplate",
         config = {
           say_hello = true
@@ -60,6 +63,7 @@ describe("Boilerplate", function()
     before_each(function()
       service = kong_sdk.services:create({
         name = "test-service",
+        id = "0a7f3795-bc92-43b5-aada-258113b7c4ee",
         url = "http://mockbin:8080/request"
       })
 
@@ -68,7 +72,9 @@ describe("Boilerplate", function()
 
     it("should add headers to the proxied request", function()
       kong_sdk.plugins:create({
-        service_id = service.id,
+        service = {
+          id = service.id
+        },
         name = "boilerplate",
         config = {
           say_hello = false

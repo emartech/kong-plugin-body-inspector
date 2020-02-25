@@ -1,6 +1,23 @@
+local typedefs = require "kong.db.schema.typedefs"
+
 return {
-  no_consumer = true,
+  name = "biolerplate",
   fields = {
-    say_hello = { type = "boolean", default = true }
+    {
+      consumer = typedefs.no_consumer
+    },
+    {
+      config = {
+        type = "record",
+        fields = {
+          {
+            say_hello = { 
+              type = "boolean", 
+              default = true 
+            }
+          }
+        }
+      }
+    }
   }
 }
